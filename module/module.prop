@@ -1,6 +1,0 @@
-id=ohaptics_psyche_cos17
-name=O-Haptics Bridge for Xiaomi 12X (psyche) ColorOS 17
-version=v1.0
-versionCode=100
-author=Adapted from nischay12089/Oplus-vibrator-feature
-description=Replaces Xiaomi vibrator HAL with O-Haptics IVibrator/default + IOplusVibrator V2 (RichTap HE) over aw8697_haptic, mounts ColorOS waveforms, and updates my_product haptic feature flags.
