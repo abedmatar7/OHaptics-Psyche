@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<oplus-config>
+    <oplus-feature name="oplus.software.display.resolution_switch_support" />
+    <oplus-feature name="oplus.software.app_resolution_switch" />
+
+    <oplus-feature name="oplus.software.display.enhance_brightness_with_uidimming" />
+
+    <oplus-feature name="oplus.software.display.dynamic_fps_switch" />
+    <oplus-feature name="oplus.software.display.refreshrate_default_smart" />
+    <oplus-feature name="oplus.software.display.multi_device_decrease_refresh_rate" />
+
+    <oplus-feature name="oplus.hardware.audio.voice_isolation_support_v2" />
+    <oplus-feature name="oplus.software.video.surround_record_support" />
+
+    <!-- O-Haptics bridge: audio.haptic_channel_support dropped so Settings exposes O-Haptics -->
+    <oplus-feature name="oplus.software.haptic_vibrator_v1.support" />
+    <oplus-feature name="oplus.software.vibrator.long_press_home_wave_support" />
+
+    <oplus-feature name="oplus.software.audio.media_control" />
+    <oplus-feature name="oplus.software.audio.hearing_health_support" />
+    <oplus-feature name="oplus.software.audio.spl_limit_support" />
+    <oplus-feature name="oplus.software.audio.dualspk_support" />
+    <oplus-feature name="oplus.software.spatializer_speaker" />
+    <oplus-feature name="oplus.software.bluetooth_volume_sync" />
+    <oplus-feature name="oplus.software.multi_app.volume.adjust.support" />
+    <oplus-feature name="oplus.software.audio.assistant_volume_support" />
+    <oplus-feature name="oplus.software.audio.volume_default_adjust" />
+    <oplus-feature name="oplus.software.audio.privacy_call_software_mode_support" />
+
+    <oplus-feature name="oplus.software.audio.effect.combined" />
+    <oplus-feature name="oplus.software.audio.mss_music_only" />
+    <oplus-feature name="oplus.software.audio.voice_wakeup_support" />
+    <oplus-feature name="oplus.software.audio.voice_wakeup_xbxb_support" />
+    <oplus-feature name="oplus.software.speechassist.oneshot.support" />
+
+    <oplus-feature name="oplus.software.video.sr_support" />
+    <oplus-feature name="oplus.software.display.reduce_brightness_rm" />
+    <oplus-feature name="oplus.software.display.reduce_brightness_rm_manual" />
+    <oplus-feature name="oplus.software.display.brightness_memory_rm" />
+    <oplus-feature name="oplus.software.display.camera.brighten" />
+    <oplus-feature name="oplus.software.display.ui_disable_fill_light_animation" />
+    <oplus-feature name="oplus.software.display.mura_enhance_brightness_support" />
+    <oplus-feature name="oplus.software.display.screen_select" />
+    <oplus-feature name="oplus.software.display.peak_brightness_test_support" />
+    <oplus-feature name="oplus.software.display.origin_roundcorner_support" />
+    <oplus-feature name="oplus.software.display.game_color_space_support" />
+</oplus-config>
