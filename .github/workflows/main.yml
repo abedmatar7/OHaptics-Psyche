@@ -1,0 +1,60 @@
+name: Build O-Haptics Psyche ColorOS 17 Module
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Locate Android NDK clang++
+        id: ndk
+        run: |
+          NDK="${ANDROID_NDK_LATEST_HOME:-}"
+          if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
+            NDK="$(ls -d /usr/local/lib/android/sdk/ndk/* 2>/dev/null | sort -V | tail -n1)"
+          fi
+          echo "Using NDK: $NDK"
+          CXX="$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang++"
+          test -x "$CXX"
+          echo "cxx=$CXX" >> "$GITHUB_OUTPUT"
+
+      - name: Compile vibratorfeature_service for psyche (arm64, API 31)
+        run: |
+          mkdir -p module/system/vendor/bin/hw
+          "${{ steps.ndk.outputs.cxx }}"             -O2 -std=c++17 -Wall -Wextra -Wno-unused-parameter             -fno-exceptions -fno-rtti             src/vibratorfeature_service.cpp             -o module/system/vendor/bin/hw/vendor.xiaomi.hardware.vibratorfeature.service             -lbinder_ndk -llog -ldl -lm
+          chmod 0755 module/system/vendor/bin/hw/vendor.xiaomi.hardware.vibratorfeature.service
+          file module/system/vendor/bin/hw/vendor.xiaomi.hardware.vibratorfeature.service
+
+      - name: Fetch ColorOS O-Haptics waveforms from upstream
+        run: |
+          git clone --depth 1 https://github.com/nischay12089/Oplus-vibrator-feature.git upstream_ohaptics
+          mkdir -p module/system/vendor/firmware/ohaptics
+          if [ -f upstream_ohaptics/out/coloros_release/OHaptics_onyx_ColorOS.zip ]; then
+            mkdir -p tmp_cos
+            unzip -q upstream_ohaptics/out/coloros_release/OHaptics_onyx_ColorOS.zip -d tmp_cos
+            find tmp_cos -type f -name '*_RTP.bin' -exec cp -f {} module/system/vendor/firmware/ohaptics/ \;
+          fi
+          if [ "$(ls module/system/vendor/firmware/ohaptics/*_RTP.bin 2>/dev/null | wc -l)" -eq 0 ]; then
+            find upstream_ohaptics/out/rom/odm/firmware -type f -name '*_RTP.bin' -exec cp -f {} module/system/vendor/firmware/ohaptics/ \;
+          fi
+          COUNT="$(ls module/system/vendor/firmware/ohaptics/*_RTP.bin 2>/dev/null | wc -l)"
+          echo "Extracted $COUNT RTP waveform files"
+          test "$COUNT" -gt 0
+
+      - name: Package Magisk / KernelSU module zip
+        run: |
+          cd module
+          zip -r9 ../OHaptics-Psyche-ColorOS17-v1.0.zip .
+          cd ..
+          ls -lh OHaptics-Psyche-ColorOS17-v1.0.zip
+
+      - name: Upload module artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OHaptics-Psyche-ColorOS17-v1.0
+          path: OHaptics-Psyche-ColorOS17-v1.0.zip
